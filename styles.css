@@ -1,0 +1,7 @@
+body { font-family: Arial; margin: 20px; }
+    select, button { margin: 5px 0; padding: 6px; }
+    .result { margin-top: 10px; padding: 10px; border: 1px solid #ccc; }
+    .good { color: green; font-weight: bold; }
+    .bad { color: darkred; font-weight: bold; }
+    .immune { color: purple; font-weight: bold; }
+    
