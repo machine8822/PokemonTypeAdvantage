@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon Information</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
 </head>
 <body>
     <h2>Pokémon Type Advantage Calculator</h2>
@@ -18,7 +17,12 @@
         <option value="">None</option>
     </select><br>
 
-    <button onclick="calculate()">Calculate</button>
+    <button id="calcBtn">Calculate</button>
 
     <div class="result" id="results"></div>
+
+    <!-- Script placed at bottom so DOM loads first -->
+    <script src="script.js" defer></script>
 </body>
+</html>
+
