@@ -4,7 +4,7 @@ const types = [
     "Flying","Psychic","Bug","Rock","Ghost","Dragon","Dark","Steel","Fairy"
 ];
 
-// Effectiveness chart: attackType > defenseType multiplier
+// Effectiveness data: attackType > defenseType = multiplier
 const chart = {
     Normal:    { Rock:0.5, Ghost:0, Steel:0.5 },
     Fire:      { Fire:0.5, Water:0.5, Grass:2, Ice:2, Bug:2, Rock:0.5, Dragon:0.5, Steel:2 },
@@ -27,30 +27,39 @@ const chart = {
 };
 
 // Populate dropdowns
+const type1Select = document.getElementById("type1");
+const type2Select = document.getElementById("type2");
+const resultBox = document.getElementById("results");
+
 types.forEach(type => {
-    document.getElementById("type1").innerHTML += `<option value="${type}">${type}</option>`;
-    document.getElementById("type2").innerHTML += `<option value="${type}">${type}</option>`;
+    type1Select.innerHTML += `<option value="${type}">${type}</option>`;
+    type2Select.innerHTML += `<option value="${type}">${type}</option>`;
 });
 
+// Calculate effectiveness
 function calculate() {
-    const t1 = document.getElementById("type1").value;
-    const t2 = document.getElementById("type2").value;
-    let result = "";
+    const t1 = type1Select.value;
+    const t2 = type2Select.value;
+    let output = "";
 
-    types.forEach(atk => {
-        let mult = 1;
+    types.forEach(attackingType => {
+        let multiplier = 1;
 
-        if (chart[atk]?.[t1]) mult *= chart[atk][t1];
-        if (t2 && chart[atk]?.[t2]) mult *= chart[atk][t2];
+        if (chart[attackingType]?.[t1]) multiplier *= chart[attackingType][t1];
+        if (t2 && chart[attackingType]?.[t2]) multiplier *= chart[attackingType][t2];
 
-        if (mult > 1) {
-            result += `<div class="good">${atk}: ${mult}x damage</div>`;
-        } else if (mult === 0) {
-            result += `<div class="immune">${atk}: No effect</div>`;
-        } else if (mult < 1) {
-            result += `<div class="bad">${atk}: ${mult}x damage</div>`;
+        if (multiplier > 1) {
+            output += `<div class="good">${attackingType}: ${multiplier}x damage</div>`;
+        } else if (multiplier === 0) {
+            output += `<div class="immune">${attackingType}: No effect</div>`;
+        } else if (multiplier < 1) {
+            output += `<div class="bad">${attackingType}: ${multiplier}x damage</div>`;
         }
     });
 
-    document.getElementById("results").innerHTML = result || "No type selected.";
+    resultBox.innerHTML = output || "Please choose at least one type.";
 }
+
+// Button listener
+document.getElementById("calcBtn").addEventListener("click", calculate);
+
